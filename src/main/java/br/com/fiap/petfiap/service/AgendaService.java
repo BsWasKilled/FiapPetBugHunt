@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @Service
 public class AgendaService {
 
+    private static final Logger log = LoggerFactory.getLogger(AgendaService.class);
+
     @Autowired
     private AtendimentoRepository repository;
 
@@ -31,8 +33,8 @@ public class AgendaService {
             }
         }
         Atendimento salvo = repository.save(novo);
-        System.out.println("Recibo: atendimento " + salvo.getProtocolo()
-                + " agendado para " + salvo.getPetNome() + " (tutor " + salvo.getTutorNome() + ")");
+        log.info("Atendimento {} agendado para {} (tutor {})",
+                salvo.getProtocolo(), salvo.getPetNome(), salvo.getTutorNome());
         return salvo;
     }
 
