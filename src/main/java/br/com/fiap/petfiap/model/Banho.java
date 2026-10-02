@@ -30,6 +30,7 @@ public class Banho extends Atendimento {
             return 80.0;
         }
         return 100.0;
+    }
 
     @Override
     public int calcularPontosFidelidade() {
