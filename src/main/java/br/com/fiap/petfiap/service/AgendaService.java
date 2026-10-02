@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 // Regras de agenda do PetFiap: agendar, concluir e cancelar atendimentos.
 @Service
@@ -18,6 +19,9 @@ public class AgendaService {
 
     // Agenda um novo atendimento: recusa horario ja ocupado pelo mesmo pet.
     public Atendimento agendar(Atendimento novo) {
+        if (novo.getDataHora() == null || novo.getDataHora().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Data/hora do atendimento nao pode estar no passado");
+        }
         List<Atendimento> doPet = repository.findByPetNome(novo.getPetNome());
         for (Atendimento a : doPet) {
             if (a.getPetNome().equals (novo.getPetNome()) && a.getDataHora().equals (novo.getDataHora())
